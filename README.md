@@ -5,6 +5,7 @@ Exploring the content of payment cards at [Junction2022](https://app.hackjunctio
 
 ## Table of Contents
 
+- [Demo link](#demo_link)
 - [What](#what)
 - [Why](#why)
 - [Installation](#installation)
@@ -15,6 +16,10 @@ Exploring the content of payment cards at [Junction2022](https://app.hackjunctio
 - [License](#license)
 
 ---
+
+## Demo link
+
+Try it out the [webapp](http://trojar.pythonanywhere.com/)! (Although we have limited credits, so the website might go offline any time :( )
 
 ## What
 
