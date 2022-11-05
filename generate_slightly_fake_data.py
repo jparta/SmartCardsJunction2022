@@ -13,16 +13,17 @@ def days_to_seconds(days):
     return seconds
 
 def random_recent_date():
-    start = date.today()
-    end = copy(start)
-    end = date(year=end.year + 1, month=end.month, day=end.day)
+    start_years_ago = 5
+    end = date.today()
+    start = copy(end)
+    start = date(year=start.year - start_years_ago, month=start.month, day=start.day)
     delta = end - start
     delta_seconds = days_to_seconds(delta.days)
     random_seconds = random.randrange(delta_seconds)
     return start + timedelta(seconds=random_seconds)
 
 def increment_date_random(date):
-    delta_range = (0, 31)
+    delta_range = (0, 14)
     min_seconds = days_to_seconds(delta_range[0])
     max_seconds = days_to_seconds(delta_range[1])
     random_seconds = random.randrange(min_seconds, max_seconds)
