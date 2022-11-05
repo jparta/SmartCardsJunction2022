@@ -69,6 +69,30 @@ def card_info():
             card_data = json.load(f)
 
         applications = card_data["Applications"]
+        # Clean up the AUC tag values
+        for app in applications:
+            tag = "Application Usage Control"
+            auc: str = app[tag]
+            begin_strip = "<AUC: "
+            end_strip = ">"
+            if auc.startswith(begin_strip):
+                auc = auc[len(begin_strip):]
+            if auc.endswith(end_strip):
+                auc = auc[:-len(end_strip)]
+            auc = auc.replace(", ", " <br>")
+            app[tag] = auc
+        # Clean up the CVM tag values
+        for app in applications:
+            tag = "Cardholder Verification Method (CVM) List"
+            cvm: str = app[tag]
+            begin_strip = "<CVM List x: 0, y: 0, rules: "
+            end_strip = ">"
+            if cvm.startswith(begin_strip):
+                cvm = cvm[len(begin_strip):]
+            if cvm.endswith(end_strip):
+                cvm = cvm[:-len(end_strip)]
+            cvm = cvm.replace(".; ", " ")
+            app[tag] = cvm
         app_df = (
             pd.DataFrame.from_dict(applications)
             .set_index("Application Label")
