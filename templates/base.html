@@ -1,0 +1,185 @@
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Get to know your card</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {{ bootstrap.load_css() }}
+    <style>
+        pre {
+            background: #ddd;
+            padding: 10px;
+        }
+        footer {
+            margin: 20px;
+        }
+        body {
+            font-family: sans-serif;
+        }
+        p {
+            color: #666;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #01690e;
+        }
+        .centered {
+            margin: 0 auto;
+            padding: 0 1em;
+        }
+        @media screen and (min-width: 52em) {
+        .centered {
+            max-width: 52em;
+            }
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            background-color: white;
+            padding: 10px;
+        }
+        .grid-item {
+            background-color: white;
+            border: 0px;
+            padding: 20px;
+            text-align: center;
+        }
+        /*--------------------------------------------------------------
+        Header styles minus menu
+        --------------------------------------------------------------*/
+        .masthead {
+            background: #e74c3c;
+            box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
+        }
+        .site-title {
+            margin: 0 0 1em;
+            padding: 1em 0;
+            font-size: 2em;
+            font-weight: 300;
+            text-align: center;
+            color: black;
+        }
+        @media screen and (min-width: 44.44em) {
+        .site-title {
+            font-size: 2em;
+            }
+        }
+        @media screen and (min-width: 50em) {
+            .site-title {
+                font-size: 2.5em;
+            }
+        }
+        .site-title a {
+            color: hsl(5, 45%, 95%);
+            text-decoration: none;
+        }
+        .site-title a:hover {
+            text-decoration: underline;
+        }
+        /* Card Based Layout - Base styles */
+        body {
+            background: #ecf0f1;
+            line-height: 1.4;
+        }
+        .site-title {
+            color: white;
+        }
+        .card {
+            background: white;
+            margin-bottom: 2em;
+        }
+        .card a {
+            color: black;
+            text-decoration: none;
+        }
+        .card a:hover {
+            box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
+        }
+        .card-content {
+            padding: 1.4em;
+        }
+        .card-content h2 {
+            margin-top: 0;
+            margin-bottom: 0.5em;
+            font-weight: normal;
+        }
+        .card-content p {
+            font-size: 95%;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        /* Flexbox styles */
+        @media screen and (min-width: 40em) {
+            .cards {
+                margin-top: -1em;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .card {
+                margin-bottom: 1em;
+                display: flex;
+                flex: 0 1 calc(50% - 0.5em);
+                /* width: calc(50% - 1em); */
+            }
+        } /* mq 40em*/
+        @media screen and (min-width: 60em) {
+            .cards {
+                margin-top: inherit;
+        }
+            .card {
+                margin-bottom: 2em;
+                display: flex;
+                flex: 0 1 calc(33% - 0.5em);
+                /* width: calc(33% - 1em); */
+            }
+        } /* mq 60em*/
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {{ render_nav_item('index', 'Home') }}
+                {{ render_nav_item('card_info', 'Card Info') }}
+                {{ render_nav_item('test_form', 'Contact Customer Support') }}
+                {{ render_nav_item('test_nav', 'Nav') }}
+                {{ render_nav_item('test_pagination', 'Pagination') }}
+                {{ render_nav_item('test_flash', 'Flash Messages') }}
+                {{ render_nav_item('test_table', 'Table') }}
+                {{ render_nav_item('test_icon', 'Icon') }}
+                {{ render_nav_item('test_icons', 'Icons') }}
+                <li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentation</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/" target="_blank">Bootstrap Documentation</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://github.com/jparta/SmartCardsJunction2022" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    
+    <main class="container">
+        {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center">
+        {% block footer %}
+            <small> <a href="https://www.junction2022.com/">Junction 2022</a>
+            </small>
+        {% endblock %}
+    </footer>
+
+    {{ bootstrap.load_js() }}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}
+
+{% block content %}
+
+    <h1>Card Info</h1>
+    <form method="post">
+        {{ form.csrf_token }}
+        {{ render_field(form.submit) }}
+    </form>
+    <br>
+    <div class="grid-container" style="padding: 5rem; border-radius: 5rem;">
+        <div class="grid-item">
+            <img src="card.png" alt="Your card">
+        </div>
+        <div class="grid-item">
+        </div>
+        <div class="grid-item">
+            <div id='chart' class='chart'>
+                <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                <script type='text/javascript'>
+                    var graphs = {{ graphJSON | safe }};
+                    Plotly.plot('chart',graphs,{});
+                </script>
+            </div>
+        </div>
+        <div class="grid-item"></div>
+      </div>
+    </div>
+{% endblock %}
