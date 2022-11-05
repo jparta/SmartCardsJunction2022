@@ -18,10 +18,10 @@ Exploring the content of payment cards at [Junction2022](https://app.hackjunctio
 ## What
 
 ### The Evil Side: Data from the card
-This repo contains all the data extracted from a **test** payment card via a smart reader (public keys for its security, as well!), and converted from bytes to human-readable text.
+This repo contains all the data extracted from a **test** payment card via a smart reader (public keys for its security, as well!), and converted from bytes to human-readable text. You can find them [here](https://github.com/jparta/SmartCardsJunction2022/blob/main/all_card_data.txt).
 
 ### The Good Side: Making users aware
-We built an app that runs in the browser and nicely translates the data from the card into text, tables, and charts. The app is able to provide timely notification regarding suspect anomalies, for example when offline verification becomes suspiciously frequent or when the approved amount for transactions seems too high compared with past behaviour.
+We built an [app](https://github.com/jparta/SmartCardsJunction2022/blob/main/app.py) that runs in the browser and nicely translates the data from the card into text, tables, and charts. The app is able to provide timely notification regarding suspect anomalies, for example when offline verification becomes suspiciously frequent or when the approved amount for transactions seems too high compared with past behaviour.
 
 
 ## Why
@@ -43,7 +43,7 @@ $ git clone https://github.com/jparta/SmartCardsJunction2022.git
 
 3) Install required libraries
 ```shell
-$ pip install -r requirments.txt
+$ pip install -r requirements.txt
 ```
  
 4) Run the app on you local machine from the root folder of the repository
