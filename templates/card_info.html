@@ -4,6 +4,7 @@
 {% block content %}
 
     <h1>Card Info</h1>
+    <p>Press the button below to load the data from your card.</p>
     <form method="post">
         {{ form.csrf_token }}
         {{ render_field(form.get_card_data) }}
