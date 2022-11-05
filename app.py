@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from wsgiref import validate
+from wsgiref.validate import validator
 from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms.validators import DataRequired, Length, Regexp
+from wtforms.validators import DataRequired, Length, Regexp, Optional
 from wtforms.fields import *
 from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
@@ -35,16 +37,13 @@ csrf = CSRFProtect(app)
 
 
 class CustomerSupportForm(FlaskForm):
-    relevant_date = DateTimeField()
+    relevant_date = StringField(description="YYYY-MM-DD")
     reason_for_contact = StringField()  # will not autocapitalize on mobile
     freetext_description = TextAreaField()
-    image = FileField(
-        render_kw={"class": "my-class"}, validators=[Regexp(".+\.jpg$")]
-    )  # add your class
+    image = FileField(validators=(Optional(),))
     email = EmailField(description="We'll never share your email with anyone else.")
     telephone = TelField()
-    country_code = IntegerField("Country Code")
-    area_code = IntegerField("Area Code/Exchange")
+    country = StringField("Country")
     # remember = BooleanField("Remember me")
     submit = SubmitField()
 
@@ -78,9 +77,9 @@ def card_info():
             begin_strip = "<AUC: "
             end_strip = ">"
             if auc.startswith(begin_strip):
-                auc = auc[len(begin_strip):]
+                auc = auc[len(begin_strip) :]
             if auc.endswith(end_strip):
-                auc = auc[:-len(end_strip)]
+                auc = auc[: -len(end_strip)]
             auc = auc.replace(", ", " <br>")
             app[tag] = auc
         # Clean up the CVM tag values
@@ -90,9 +89,9 @@ def card_info():
             begin_strip = "<CVM List x: 0, y: 0, rules: "
             end_strip = ">"
             if cvm.startswith(begin_strip):
-                cvm = cvm[len(begin_strip):]
+                cvm = cvm[len(begin_strip) :]
             if cvm.endswith(end_strip):
-                cvm = cvm[:-len(end_strip)]
+                cvm = cvm[: -len(end_strip)]
             cvm = cvm.replace(".; ", " ")
             app[tag] = cvm
         app_df = (
@@ -120,7 +119,7 @@ def card_info():
                         align="left",
                     ),
                 )
-            ]
+            ],
         )
 
         txs_counts_n = 100
@@ -142,8 +141,13 @@ def card_info():
         )
         # Set y-axes titles
         fig.update_yaxes(title_text="total transactions", secondary_y=False)
-        fig.update_yaxes(title_text="consecutive offline transactions", secondary_y=True)
-        fig.update_layout(title="Transactions recorded for this card identifier: total, offline", template="ggplot2")
+        fig.update_yaxes(
+            title_text="consecutive offline transactions", secondary_y=True
+        )
+        fig.update_layout(
+            title="Transactions recorded for this card identifier: total, offline",
+            template="ggplot2",
+        )
         flash(
             "Anomalous transaction detected: unusual location, multiple failed authentication attempts",
             "danger",
