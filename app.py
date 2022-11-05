@@ -11,6 +11,7 @@ from plotly.subplots import make_subplots
 import plotly
 import pandas as pd
 import json
+from pathlib import Path
 
 from generate_slightly_fake_data import transaction_counts
 
@@ -65,7 +66,8 @@ def card_info():
     if request.method == "POST":
         show_card = 1
         card_data = dict()
-        with open("card_info.json", "r") as f:
+        card_info_json_filepath = Path(__file__).parent / "card_info.json"
+        with open(card_info_json_filepath, "r") as f:
             card_data = json.load(f)
 
         applications = card_data["Applications"]
