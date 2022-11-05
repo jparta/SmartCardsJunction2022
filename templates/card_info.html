@@ -9,22 +9,38 @@
         {{ render_field(form.submit) }}
     </form>
     <br>
-    <div class="grid-container" style="padding: 5rem; border-radius: 5rem;">
+    <div class="grid-container" style="padding: 3rem; border-radius: 5rem;">
         <div class="grid-item">
-            <img src="card.png" alt="Your card">
+            {% if show_card %}
+                <p>The reader has read the followig card:</p>
+                <img src="../static/card.png" alt="Your card">
+            {% endif %}
         </div>
         <div class="grid-item">
         </div>
         <div class="grid-item">
-            <div id='chart' class='chart'>
-                <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-                <script type='text/javascript'>
-                    var graphs = {{ graphJSON | safe }};
-                    Plotly.plot('chart',graphs,{});
-                </script>
-            </div>
         </div>
         <div class="grid-item"></div>
-      </div>
+        </div>
+    </div>
+    <br>
+    <div style="padding: 3rem; border-radius: 5rem; background-color: white;">
+        <div id='tablechart' class='tablechart' style="border-radius: 5rem;">
+            <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+            <script type='text/javascript'>
+                var graphs = {{ tableJSON | safe }};
+                Plotly.plot('tablechart',graphs,{});
+            </script>
+        </div>
+    </div>
+    <br>
+    <div style="padding: 3rem; border-radius: 5rem; background-color: white;">
+        <div id='chart' class='chart'>
+            <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+            <script type='text/javascript'>
+                var graphs = {{ graphJSON | safe }};
+                Plotly.plot('chart',graphs,{});
+            </script>
+        </div>
     </div>
 {% endblock %}

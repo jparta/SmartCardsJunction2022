@@ -117,9 +117,40 @@ def index():
 
 @app.route("/card_info", methods=["GET", "POST"])
 def card_info():
+    show_card = 0
     form = FetchDataForm()
     df = pd.DataFrame()
     if request.method == "POST":
+        show_card = 1
+        card_data = dict()
+        with open("card_info.json", "r") as f:
+            card_data = json.load(f)
+
+        applications = card_data["Applications"]
+        app_df = (
+            pd.DataFrame.from_dict(applications)
+            .set_index("Application Label")
+            .T.reset_index()
+            .rename(columns={"index": "emv tag"})
+        )
+        table = go.Figure(
+            data=[
+                go.Table(
+                    header=dict(
+                        values=app_df.columns,
+                        fill_color="#005F83",
+                        font_color="white",
+                        align="left",
+                    ),
+                    cells=dict(
+                        values=app_df.values.T,
+                        fill_color="#ecf0f1",
+                        align="left",
+                    ),
+                )
+            ]
+        )
+
         txs_counts_n = 100
         card_txs_data = transaction_counts(txs_counts_n)
         df = pd.DataFrame(card_txs_data)
@@ -132,12 +163,15 @@ def card_info():
             secondary_y=False,
         )
         fig.add_trace(
-            go.Scatter(x=date_column, y=since_online, name="transactions since last online"),
+            go.Scatter(
+                x=date_column, y=since_online, name="transactions since last online"
+            ),
             secondary_y=True,
         )
         # Set y-axes titles
         fig.update_yaxes(title_text="total transactions", secondary_y=False)
         fig.update_yaxes(title_text="transactions since last online", secondary_y=True)
+        fig.update_layout(template="ggplot2")
         flash(
             "Anomalous transaction detected: unusual location, multiple failed authentication attempts",
             "danger",
@@ -145,10 +179,18 @@ def card_info():
         flash("Your card appears to be expired on 2019-01-31!", "warning")
     else:
         fig = px.bar(template="ggplot2")
+        table = px.bar(template="ggplot2")
 
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    tableJSON = json.dumps(table, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template("card_info.html", form=form, graphJSON=graphJSON)
+    return render_template(
+        "card_info.html",
+        show_card=show_card,
+        form=form,
+        tableJSON=tableJSON,
+        graphJSON=graphJSON,
+    )
 
 
 @app.route("/card_info", methods=["POST"])
