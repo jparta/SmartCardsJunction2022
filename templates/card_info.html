@@ -25,11 +25,11 @@
     </div>
     <br>
     <div style="padding: 3rem; border-radius: 5rem; background-color: white;">
-        <div id='tablechart' class='tablechart' style="border-radius: 5rem;">
+        <div id='chart' class='chart'>
             <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
             <script type='text/javascript'>
-                var graphs = {{ tableJSON | safe }};
-                Plotly.plot('tablechart',graphs,{});
+                var graphs = {{ graphJSON | safe }};
+                Plotly.plot('chart',graphs,{});
             </script>
         </div>
         <p>
@@ -38,11 +38,11 @@
     </div>
     <br>
     <div style="padding: 3rem; border-radius: 5rem; background-color: white;">
-        <div id='chart' class='chart'>
+        <div id='tablechart' class='tablechart' style="border-radius: 5rem;">
             <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
             <script type='text/javascript'>
-                var graphs = {{ graphJSON | safe }};
-                Plotly.plot('chart',graphs,{});
+                var graphs = {{ tableJSON | safe }};
+                Plotly.plot('tablechart',graphs,{});
             </script>
         </div>
     </div>
