@@ -49,45 +49,6 @@ class CustomerSupportForm(FlaskForm):
     submit = SubmitField()
 
 
-class ExampleForm(FlaskForm):
-    """An example form that contains all the supported bootstrap style form fields."""
-
-    date = DateField(
-        description="We'll never share your email with anyone else."
-    )  # add help text with `description`
-    datetime = DateTimeField(
-        render_kw={"placeholder": "this is a placeholder"}
-    )  # add HTML attribute with `render_kw`
-    datetime_local = DateTimeLocalField()
-    time = TimeField()
-    month = MonthField()
-    floating = FloatField()
-    integer = IntegerField()
-    decimal_slider = DecimalRangeField()
-    integer_slider = IntegerRangeField(render_kw={"min": "0", "max": "4"})
-    email = EmailField()
-    url = URLField()
-    telephone = TelField()
-    image = FileField(
-        render_kw={"class": "my-class"}, validators=[Regexp(".+\.jpg$")]
-    )  # add your class
-    option = RadioField(
-        choices=[("dog", "Dog"), ("cat", "Cat"), ("bird", "Bird"), ("alien", "Alien")]
-    )
-    select = SelectField(
-        choices=[("dog", "Dog"), ("cat", "Cat"), ("bird", "Bird"), ("alien", "Alien")]
-    )
-    select_multiple = SelectMultipleField(
-        choices=[("dog", "Dog"), ("cat", "Cat"), ("bird", "Bird"), ("alien", "Alien")]
-    )
-    bio = TextAreaField()
-    search = SearchField()  # will autocapitalize on mobile
-    title = StringField()  # will not autocapitalize on mobile
-    secret = PasswordField()
-    remember = BooleanField("Remember me")
-    submit = SubmitField()
-
-
 class HelloForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(1, 20)])
     password = PasswordField("Password", validators=[DataRequired(), Length(8, 150)])
@@ -105,26 +66,6 @@ class ButtonForm(FlaskForm):
 
 class FetchDataForm(FlaskForm):
     submit = SubmitField()
-
-
-class TelephoneForm(FlaskForm):
-    country_code = IntegerField("Country Code")
-    area_code = IntegerField("Area Code/Exchange")
-    number = StringField("Number")
-
-
-class IMForm(FlaskForm):
-    protocol = SelectField(choices=[("aim", "AIM"), ("msn", "MSN")])
-    username = StringField()
-
-
-class ContactForm(FlaskForm):
-    first_name = StringField()
-    last_name = StringField()
-    mobile_phone = FormField(TelephoneForm)
-    office_phone = FormField(TelephoneForm)
-    emails = FieldList(StringField("Email"), min_entries=3)
-    im_accounts = FieldList(FormField(IMForm), min_entries=2)
 
 
 class Message(db.Model):
@@ -226,40 +167,6 @@ def test_form():
     )
 
 
-@app.route("/nav", methods=["GET", "POST"])
-def test_nav():
-    return render_template("nav.html")
-
-
-@app.route("/pagination", methods=["GET", "POST"])
-def test_pagination():
-    page = request.args.get("page", default=1, type=int)
-    # pagination = Message.query.paginate(page, per_page=10)
-    pagination = Message.query.paginate(per_page=10)
-    messages = pagination.items
-    return render_template("pagination.html", pagination=pagination, messages=messages)
-
-
-@app.route("/flash", methods=["GET", "POST"])
-def test_flash():
-    flash("A simple default alert—check it out!")
-    flash("A simple primary alert—check it out!", "primary")
-    flash("A simple secondary alert—check it out!", "secondary")
-    flash("A simple success alert—check it out!", "success")
-    flash("A simple danger alert—check it out!", "danger")
-    flash("A simple warning alert—check it out!", "warning")
-    flash("A simple info alert—check it out!", "info")
-    flash("A simple light alert—check it out!", "light")
-    flash("A simple dark alert—check it out!", "dark")
-    flash(
-        Markup(
-            'A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.'
-        ),
-        "success",
-    )
-    return render_template("flash.html")
-
-
 @app.route("/table")
 def test_table():
     page = request.args.get("page", 1, type=int)
@@ -328,16 +235,6 @@ def like_message(message_id):
 @app.route("/table/new-message")
 def new_message():
     return 'Here is the new message page. Return to <a href="/table">table</a>.'
-
-
-@app.route("/icon")
-def test_icon():
-    return render_template("icon.html")
-
-
-@app.route("/icons")
-def test_icons():
-    return render_template("icons.html")
 
 
 if __name__ == "__main__":
