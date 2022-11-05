@@ -18,9 +18,6 @@ from generate_slightly_fake_data import transaction_counts
 app = Flask(__name__, static_folder="./static", template_folder="./templates")
 app.secret_key = "dev"
 
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-
 # set default button sytle and size, will be overwritten by macro parameters
 app.config["BOOTSTRAP_BTN_STYLE"] = "primary"
 app.config["BOOTSTRAP_BTN_SIZE"] = "sm"
@@ -33,7 +30,6 @@ app.config["BOOTSTRAP_TABLE_DELETE_TITLE"] = "Remove"
 app.config["BOOTSTRAP_TABLE_NEW_TITLE"] = "Create"
 
 bootstrap = Bootstrap5(app)
-db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
 
@@ -52,62 +48,8 @@ class CustomerSupportForm(FlaskForm):
     submit = SubmitField()
 
 
-class HelloForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(1, 20)])
-    password = PasswordField("Password", validators=[DataRequired(), Length(8, 150)])
-    remember = BooleanField("Remember me")
-    submit = SubmitField()
-
-
-class ButtonForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(1, 20)])
-    confirm = SwitchField("Confirmation")
-    submit = SubmitField()
-    delete = SubmitField()
-    cancel = SubmitField()
-
-
 class FetchDataForm(FlaskForm):
     submit = SubmitField()
-
-
-class Message(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(100), nullable=False)
-    draft = db.Column(db.Boolean, default=False, nullable=False)
-    create_time = db.Column(db.Integer, nullable=False, unique=True)
-
-
-@app.before_first_request
-def before_first_request_func():
-    db.drop_all()
-    db.create_all()
-    for i in range(20):
-        url = "mailto:x@t.me"
-        if i % 7 == 0:
-            url = "www.t.me"
-        elif i % 7 == 1:
-            url = "https://t.me"
-        elif i % 7 == 2:
-            url = "http://t.me"
-        elif i % 7 == 3:
-            url = "http://t"
-        elif i % 7 == 4:
-            url = "http://"
-        elif i % 7 == 5:
-            url = "x@t.me"
-        m = Message(
-            text=f"Message {i+1} {url}",
-            author=f"Author {i+1}",
-            category=f"Category {i+1}",
-            create_time=4321 * (i + 1),
-        )
-        if i % 4:
-            m.draft = True
-        db.session.add(m)
-    db.session.commit()
 
 
 @app.route("/")
@@ -193,14 +135,6 @@ def card_info():
     )
 
 
-@app.route("/card_info", methods=["POST"])
-def foo():
-    card_data = dict()
-    with open("card_info.json", "r") as f:
-        card_data = json.load(f)
-    return card_data
-
-
 @app.route("/form", methods=["GET", "POST"])
 def test_form():
     form = CustomerSupportForm()
@@ -211,76 +145,6 @@ def test_form():
         "form.html",
         form=form,
     )
-
-
-@app.route("/table")
-def test_table():
-    page = request.args.get("page", 1, type=int)
-    # pagination = Message.query.paginate(page, per_page=10)
-    pagination = Message.query.paginate(per_page=10)
-    messages = pagination.items
-    # messages = []
-    titles = [
-        ("id", "#"),
-        ("text", "Message"),
-        ("author", "Author"),
-        ("category", "Category"),
-        ("draft", "Draft"),
-        ("create_time", "Create Time"),
-    ]
-    data = []
-    for msg in messages:
-        data.append(
-            {
-                "id": msg.id,
-                "text": msg.text,
-                "author": msg.author,
-                "category": msg.category,
-                "draft": msg.draft,
-                "create_time": msg.create_time,
-            }
-        )
-    return render_template(
-        "table.html", messages=messages, titles=titles, Message=Message, data=data
-    )
-
-
-@app.route("/table/<int:message_id>/view")
-def view_message(message_id):
-    message = Message.query.get(message_id)
-    if message:
-        return f'Viewing {message_id} with text "{message.text}". Return to <a href="/table">table</a>.'
-    return f'Could not view message {message_id} as it does not exist. Return to <a href="/table">table</a>.'
-
-
-@app.route("/table/<int:message_id>/edit")
-def edit_message(message_id):
-    message = Message.query.get(message_id)
-    if message:
-        message.draft = not message.draft
-        db.session.commit()
-        return f'Message {message_id} has been editted by toggling draft status. Return to <a href="/table">table</a>.'
-    return f'Message {message_id} did not exist and could therefore not be edited. Return to <a href="/table">table</a>.'
-
-
-@app.route("/table/<int:message_id>/delete", methods=["POST"])
-def delete_message(message_id):
-    message = Message.query.get(message_id)
-    if message:
-        db.session.delete(message)
-        db.session.commit()
-        return f'Message {message_id} has been deleted. Return to <a href="/table">table</a>.'
-    return f'Message {message_id} did not exist and could therefore not be deleted. Return to <a href="/table">table</a>.'
-
-
-@app.route("/table/<int:message_id>/like")
-def like_message(message_id):
-    return f'Liked the message {message_id}. Return to <a href="/table">table</a>.'
-
-
-@app.route("/table/new-message")
-def new_message():
-    return 'Here is the new message page. Return to <a href="/table">table</a>.'
 
 
 if __name__ == "__main__":
