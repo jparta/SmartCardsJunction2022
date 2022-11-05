@@ -1,6 +1,7 @@
 # Get to know your payment card!
 Exploring the content of payment cards at [Junction2022](https://app.hackjunction.com/dashboard/junction-2022-1/challenge) 
 
+![image](https://user-images.githubusercontent.com/45148109/200143564-febaff8e-0a6d-4258-8c6b-87ddef45029a.png)
 
 ## Table of Contents
 
