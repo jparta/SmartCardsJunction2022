@@ -21,6 +21,8 @@ Exploring the content of payment cards at [Junction2022](https://app.hackjunctio
 
 Try it out the [webapp](http://trojar.pythonanywhere.com/)! (Although we have limited credits, so the website might go offline any time :( )
 
+[![Watch the video](https://img.youtube.com/vi/3tkJlv2ULbI/maxresdefault.jpg)](https://youtu.be/3tkJlv2ULbI)
+
 ## What
 
 ![image](https://user-images.githubusercontent.com/45148109/200143649-2a266a0d-a10e-4442-9af7-6950e61f69e5.png)
