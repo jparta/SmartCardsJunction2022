@@ -1,0 +1,41 @@
+{
+    "Applications": [
+        {
+            "Application Label": "Dankort",
+            "Application Priority Indicator": 1,
+            "Language Preference": "daensvno",
+            "Application Preferred Name": "Dankort",
+            "Issuer Country Code": "DK",
+            "Application Expiration Date": "19/01/31",
+            "Application Primary Account Number (PAN)": 4571994016439460,
+            "Application Primary Account Number (PAN) Sequence Number": 0,
+            "Cardholder Verification Method (CVM) List": "<CVM List x: 0, y: 0, rules: If unattended cash, Enciphered PIN verified online. Else, fail verification.; If purchase with cashback, Enciphered PIN verified online. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verification performed by ICC. Else, fail verification.; If terminal supports the CVM, Plaintext PIN verification performed by ICC. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verified online. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verified online; If terminal supports the CVM, Plaintext PIN verification performed by ICC>",
+            "Application Usage Control": "<AUC: Valid for domestic cash transactions, Valid for international cash transactions, Valid for international goods, Valid for international services, Valid at terminals other than ATMs>",
+            "Card Risk Management Data Object List 1 (CDOL1)": "[(([9F 02]) Amount, Authorised, 6), (([9F 03]) Amount, Other (Numeric), 6), (([9F 1A]) Terminal Country Code, 2), ((95) Terminal Verification Results, 5), (([5F 2A]) Transaction Country Code, 2), ((9A) Transaction Date, 3), ((9C) Transaction Type, 1), (([9F 37]) Unpredictable Number, 4)]",
+            "Card Risk Management Data Object List 2 (CDOL2)": "((91) Issuer Authentication Data, 8), ((8A) Authorisation Response Code, 2), (([9F 02]) Amount, Authorised, 6), (([9F 03]) Amount, Other (Numeric), 6), [9F 1A]) Terminal Country Code, 2), ((95) Terminal Verification Results, 5), (([5F 2A]) Transaction Country Code, 2), ((9A) Transaction Date, 3), ((9C) Transaction Type, 1), (([9F 37]) Unpredictable Number, 4)]",
+            "Application Currency Exponent": 2,
+            "Application Currency Code": "DKK"
+        },
+        {
+            "Application Label": "VisaDankort",
+            "Application Priority Indicator": 2,
+            "Language Preference": "daensvno",
+            "Application Preferred Name": "VisaDankort",
+            "Application Primary Account Number (PAN)": 4571994016439460,
+            "Application Primary Account Number (PAN) Sequence Number": 0,
+            "Application Expiration Date": "19/01/31",
+            "Issuer Country Code": "DK",
+            "Cardholder Verification Method (CVM) List": "<CVM List x: 0, y: 0, rules: If unattended cash, Enciphered PIN verified online. Else, fail verification.; If purchase with cashback, Enciphered PIN verified online. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verification performed by ICC. Else, fail verification.; If terminal supports the CVM, Plaintext PIN verification performed by ICC. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verified online. Else, fail verification.; If terminal supports the CVM, Enciphered PIN verified online; If terminal supports the CVM, Plaintext PIN verification performed by ICC>",
+            "Application Usage Control": "<AUC: Valid for domestic cash transactions, Valid for international cash transactions, Valid for domestic goods, Valid for international goods, Valid for domestic services, Valid for international services, Valid at ATMs, Valid at terminals other than ATMs>",
+            "Card Risk Management Data Object List 1 (CDOL1)": "[(([9F 02]) Amount, Authorised, 6), (([9F 03]) Amount, Other (Numeric), 6), (([9F 1A]) Terminal Country Code, 2), ((95) Terminal Verification Results, 5), (([5F 2A]) Transaction Country Code, 2), ((9A) Transaction Date, 3), ((9C) Transaction Type, 1), (([9F 37]) Unpredictable Number, 4)]",
+            "Card Risk Management Data Object List 2 (CDOL2)": "[((91) Issuer Authentication Data, 8), ((8A) Authorisation Response Code, 2), (([9F 02]) Amount, Authorised, 6), (([9F 03]) Amount, Other (Numeric), 6), (([9F 1A]) Terminal Country Code, 2), ((95) Terminal Verification Results, 5), (([5F 2A]) Transaction Country Code, 2), ((9A) Transaction Date, 3), ((9C) Transaction Type, 1), (([9F 37]) Unpredictable Number, 4)]",
+            "Application Currency Exponent": 2,
+            "Application Currency Code": "DKK"
+        }
+    ],
+    "Metadata": {
+        "pin_retries": 0,
+        "atc": 188,
+        "last_online_atc": 8
+    }
+}
