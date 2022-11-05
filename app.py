@@ -7,9 +7,12 @@ from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import plotly
 import pandas as pd
 import json
+
+from generate_slightly_fake_data import transaction_counts
 
 
 app = Flask(__name__, static_folder="./static", template_folder="./templates")
@@ -117,23 +120,24 @@ def card_info():
     form = FetchDataForm()
     df = pd.DataFrame()
     if request.method == "POST":
-        df = pd.DataFrame(
-            {
-                "Fruit": [
-                    "Apples",
-                    "Oranges",
-                    "Bananas",
-                    "Apples",
-                    "Oranges",
-                    "Bananas",
-                ],
-                "Amount": [4, 1, 2, 2, 4, 5],
-                "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"],
-            }
+        txs_counts_n = 100
+        card_txs_data = transaction_counts(txs_counts_n)
+        df = pd.DataFrame(card_txs_data)
+        totals = df[df.columns[0]]
+        since_online = df[df.columns[1]]
+        date_column = df[df.columns[2]]
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+        fig.add_trace(
+            go.Scatter(x=date_column, y=totals, name="total transactions"),
+            secondary_y=False,
         )
-        fig = px.bar(
-            df, x="Fruit", y="Amount", color="City", barmode="group", template="ggplot2"
+        fig.add_trace(
+            go.Scatter(x=date_column, y=since_online, name="transactions since last online"),
+            secondary_y=True,
         )
+        # Set y-axes titles
+        fig.update_yaxes(title_text="total transactions", secondary_y=False)
+        fig.update_yaxes(title_text="transactions since last online", secondary_y=True)
         flash(
             "Anomalous transaction detected: unusual location, multiple failed authentication attempts",
             "danger",

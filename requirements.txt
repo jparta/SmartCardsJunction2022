@@ -1,7 +1,5 @@
-pyscard
 plotly
 pandas
-emv
 flask
 flask-bootstrap
 bootstrap-flask

@@ -31,11 +31,11 @@ def increment_date_random(date):
 def event_happens(chance):
     return random.random() < chance
 
-def transaction_stats(n):
+def transaction_counts(n):
     """"Returns (total count, since online, date) pairs"""
     online_chance = 0.9
-    offline_anomaly_chance = 0.01
-    offline_anomaly_size_range = (2, 10)
+    offline_anomaly_chance = 0.005
+    offline_anomaly_size_range = (2, 5)
     txs_start_range = (0, 5)
     txs_delta_range = (0, 10)
     cur_total = random.randint(*txs_start_range)
@@ -61,5 +61,6 @@ def transaction_stats(n):
             cur_since_online += random.randint(*offline_anomaly_size_range)
     return data
 
-transaction_counts = transaction_stats(n)
-pprint(transaction_counts)
+
+if __name__ == "__main__":
+    pprint(transaction_counts(n))
