@@ -6,7 +6,7 @@
     <h1>Card Info</h1>
     <form method="post">
         {{ form.csrf_token }}
-        {{ render_field(form.submit) }}
+        {{ render_field(form.get_card_data) }}
     </form>
     <br>
     <div class="grid-container" style="padding: 3rem; border-radius: 5rem;">
@@ -32,6 +32,9 @@
                 Plotly.plot('tablechart',graphs,{});
             </script>
         </div>
+        <p>
+            Offline: card issuer is not contacted when verifying transaction
+        </p>
     </div>
     <br>
     <div style="padding: 3rem; border-radius: 5rem; background-color: white;">

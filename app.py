@@ -49,7 +49,7 @@ class CustomerSupportForm(FlaskForm):
 
 
 class FetchDataForm(FlaskForm):
-    submit = SubmitField()
+    get_card_data = SubmitField()
 
 
 @app.route("/")
@@ -97,9 +97,13 @@ def card_info():
             pd.DataFrame.from_dict(applications)
             .set_index("Application Label")
             .T.reset_index()
-            .rename(columns={"index": "emv tag"})
+            .rename(columns={"index": "EMV tag"})
         )
         table = go.Figure(
+            layout={
+                "title": "Card data",
+                "height": 600,
+            },
             data=[
                 go.Table(
                     header=dict(
@@ -130,14 +134,14 @@ def card_info():
         )
         fig.add_trace(
             go.Scatter(
-                x=date_column, y=since_online, name="transactions since last online"
+                x=date_column, y=since_online, name="consecutive offline transactions"
             ),
             secondary_y=True,
         )
         # Set y-axes titles
         fig.update_yaxes(title_text="total transactions", secondary_y=False)
-        fig.update_yaxes(title_text="transactions since last online", secondary_y=True)
-        fig.update_layout(template="ggplot2")
+        fig.update_yaxes(title_text="consecutive offline transactions", secondary_y=True)
+        fig.update_layout(title="Transactions recorded for this card identifier: total, offline", template="ggplot2")
         flash(
             "Anomalous transaction detected: unusual location, multiple failed authentication attempts",
             "danger",
