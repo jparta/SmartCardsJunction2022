@@ -18,16 +18,29 @@ Exploring the content of payment cards at [Junction2022](https://app.hackjunctio
 
 ## What
 
+![image](https://user-images.githubusercontent.com/45148109/200143649-2a266a0d-a10e-4442-9af7-6950e61f69e5.png)
+
+
 ### The Evil Side: Data from the card
 This repo contains all the data extracted from a **test** payment card via a smart reader (public keys for its security, as well!), and converted from bytes to human-readable text. You can find them [here](https://github.com/jparta/SmartCardsJunction2022/blob/main/all_card_data.txt).
 
+![image](https://user-images.githubusercontent.com/45148109/200143693-bb13b614-a13f-40df-b20e-ad7700a019f8.png)
+
+
 ### The Good Side: Making users aware
 We built an [app](https://github.com/jparta/SmartCardsJunction2022/blob/main/app.py) that runs in the browser and nicely translates the data from the card into text, tables, and charts. The app is able to provide timely notification regarding suspect anomalies, for example when offline verification becomes suspiciously frequent or when the approved amount for transactions seems too high compared with past behaviour.
+
+![image](https://user-images.githubusercontent.com/45148109/200143655-4a559cd3-7ff9-4794-a81c-efae3683699f.png)
+
+![image](https://user-images.githubusercontent.com/45148109/200143705-2ae7a7d2-4738-4d1b-918c-f6bf9c014351.png)
 
 
 ## Why
 
 Uncover juicy information and find out how much our cards know about the world around them.
+
+![image](https://user-images.githubusercontent.com/45148109/200143725-e3c18ba5-dd38-4607-8c6f-75f2ef1d0305.png)
+
 
 ## Installation
 
