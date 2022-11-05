@@ -13,9 +13,6 @@
             background: #ddd;
             padding: 10px;
         }
-        h2 {
-            margin-top: 20px;
-        }
         footer {
             margin: 20px;
         }
@@ -25,9 +22,10 @@
         p {
             color: #666;
         }
-        h2 {
-            font-size: 2em;
-            color: #e74c3c;
+        h1 {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #01690e;
         }
         .centered {
             margin: 0 auto;
@@ -37,6 +35,18 @@
         .centered {
             max-width: 52em;
             }
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            background-color: white;
+            padding: 10px;
+        }
+        .grid-item {
+            background-color: white;
+            border: 0px;
+            padding: 20px;
+            text-align: center;
         }
         /*--------------------------------------------------------------
         Header styles minus menu
@@ -143,7 +153,7 @@
             <ul class="navbar-nav mr-auto">
                 {{ render_nav_item('index', 'Home') }}
                 {{ render_nav_item('card_info', 'Card Info') }}
-                {{ render_nav_item('test_form', 'Form') }}
+                {{ render_nav_item('test_form', 'Contact Customer Support') }}
                 {{ render_nav_item('test_nav', 'Nav') }}
                 {{ render_nav_item('test_pagination', 'Pagination') }}
                 {{ render_nav_item('test_flash', 'Flash Messages') }}

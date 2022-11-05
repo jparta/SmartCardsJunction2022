@@ -34,6 +34,21 @@ db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
 
+class CustomerSupportForm(FlaskForm):
+    relevant_date = DateTimeField()
+    reason_for_contact = StringField()  # will not autocapitalize on mobile
+    freetext_description = TextAreaField()
+    image = FileField(
+        render_kw={"class": "my-class"}, validators=[Regexp(".+\.jpg$")]
+    )  # add your class
+    email = EmailField(description="We'll never share your email with anyone else.")
+    telephone = TelField()
+    country_code = IntegerField("Country Code")
+    area_code = IntegerField("Area Code/Exchange")
+    # remember = BooleanField("Remember me")
+    submit = SubmitField()
+
+
 class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
 
@@ -178,6 +193,11 @@ def card_info():
         fig = px.bar(
             df, x="Fruit", y="Amount", color="City", barmode="group", template="ggplot2"
         )
+        flash(
+            "Anomalous transaction detected: unusual location, multiple failed authentication attempts",
+            "danger",
+        )
+        flash("Your card appears to be expired on 2019-01-31!", "warning")
     else:
         fig = px.bar(template="ggplot2")
 
@@ -196,18 +216,13 @@ def foo():
 
 @app.route("/form", methods=["GET", "POST"])
 def test_form():
-    form = HelloForm()
+    form = CustomerSupportForm()
     if form.validate_on_submit():
         flash("Form validated!")
         return redirect(url_for("index"))
     return render_template(
         "form.html",
         form=form,
-        telephone_form=TelephoneForm(),
-        contact_form=ContactForm(),
-        im_form=IMForm(),
-        button_form=ButtonForm(),
-        example_form=ExampleForm(),
     )
 
 
